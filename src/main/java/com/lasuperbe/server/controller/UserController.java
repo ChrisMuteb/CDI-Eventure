@@ -77,5 +77,32 @@ public class UserController {
 
         return savedEvent;
     }
+    @GetMapping("/users/{id}/events")
+    public List<Event> userEvents(@PathVariable int id){
+        logger.debug("find all the events related to the userId");
+        List<Event> events = eventRepository.findAllByUser_Id(id);
+        logger.debug("events belonging to the user is complete");
+
+        return events;
+    }
+    @GetMapping("/users/{id}/events/{eventID}")
+    public Event userEvent(@PathVariable int id, @PathVariable int eventID){
+        logger.debug("find an event related to the userId" + id + " eventID: " + eventID);
+//
+        Event event = eventRepository.findEventByUser_Id(id, eventID);
+
+        return event;
+    }
+    @DeleteMapping("/users/{id}/events/{eventID}")
+    public String deleteUserEvent(@PathVariable int id, @PathVariable int eventID){
+        logger.debug("find all the events related to the userId");
+        List<Event> events = eventRepository.findAllByUser_Id(id);
+        Event event = events.stream().filter(e -> e.getUser().getUserID()==eventID).findFirst().get();
+        eventRepository.delete(event);
+
+        logger.debug("events deleted: complete");
+
+        return "event has been deleted";
+    }
 
 }
