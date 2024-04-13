@@ -3,6 +3,7 @@ package com.lasuperbe.server.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -18,7 +19,8 @@ public class EventureSecurityConfiguration {
         // 2) If a request is not authenticated, a web page is shown
         http.httpBasic(withDefaults());
         // 3) CSRF -> POST, PUT
-        http.csrf(csrf -> {});
+//        http.csrf(csrf -> {});
+        http.csrf(AbstractHttpConfigurer::disable);
         return http.build();
     }
 }
