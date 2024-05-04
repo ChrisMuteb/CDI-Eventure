@@ -17,7 +17,11 @@ public class UserService {
         return userRepository.findAll();
     }
     public User addUser(User user){
-        return userRepository.save(user);
+        Optional<User> existingUser = userRepository.findUserByEmail(user.getEmail());
+        if(existingUser.isPresent())
+            throw new RuntimeException();
+        else
+            return userRepository.save(user);
     }
 
     public User findUserById(Integer userID){

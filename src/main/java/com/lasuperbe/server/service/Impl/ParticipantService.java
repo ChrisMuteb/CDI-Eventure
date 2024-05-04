@@ -18,6 +18,9 @@ public class ParticipantService {
         return participantRepository.findAll();
     }
     public Participant addParticipant(Participant participant){
+        Optional<Participant> existingParticipant = participantRepository.findParticipantByUserID(participant.getUser().getUserID());
+        if(existingParticipant.isPresent())
+            throw new RuntimeException();
         return participantRepository.save(participant);
     }
 

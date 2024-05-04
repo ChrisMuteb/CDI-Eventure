@@ -22,6 +22,9 @@ public class EventService {
         return eventRepository.findAll();
     }
     public Event addEvent(@RequestBody Event event){
+        Optional<Event> existingEvent = eventRepository.findEventByTitle(event.getTitle());
+        if(existingEvent.isPresent())
+            throw new RuntimeException();
         eventRepository.save(event);
         return event;
     }

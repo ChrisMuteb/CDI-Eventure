@@ -18,6 +18,9 @@ public class TaskService {
         return taskRepository.findAll();
     }
     public Task addTask(Task task){
+        Optional<Task> existingTask = taskRepository.findTaskByTitle(task.getTitle());
+        if(existingTask.isPresent())
+            throw new RuntimeException();
         return taskRepository.save(task);
     }
 
