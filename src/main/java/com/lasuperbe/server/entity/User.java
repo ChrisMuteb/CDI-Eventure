@@ -10,11 +10,13 @@ import jakarta.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
+import static jakarta.persistence.CascadeType.PERSIST;
+
 @Entity(name = "user")
 @Table(name = "\"user\"")
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer userID;
     @NotBlank(message = "Name is required")
     @Size(min=2, message = "Name should have atleast 2 characters")
@@ -28,9 +30,6 @@ public class User {
             message = "Password must contain at least one digit, one lowercase letter, one uppercase letter, one special character, and no whitespace")
     private String password;
     private String role;
-    @OneToMany(mappedBy = "user")
-    @JsonIgnore
-    private Set<Event> events;
 
     public User() {
     }

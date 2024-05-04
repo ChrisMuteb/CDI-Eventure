@@ -10,15 +10,15 @@ import java.time.LocalDateTime;
 @Table(name = "event")
 public class Event {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer eventID;
     private String title;
     private String description;
     @Future(message = "event date should be in the future")
     private LocalDateTime dateTime;
     private String location;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "userID")
     private User user;
 
     public Event() {

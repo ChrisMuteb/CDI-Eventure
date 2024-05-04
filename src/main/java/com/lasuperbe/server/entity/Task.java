@@ -10,30 +10,31 @@ import java.time.LocalDateTime;
 @Table(name = "task")
 public class Task {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer taskID;
     private String title;
     private String description;
     private String status;
     @Future(message = "event date should be in the future")
-    private LocalDateTime datetime;
+    private LocalDateTime deadline;
     @ManyToOne
-    @JsonIgnore
-    private Event EventID;
+    @JoinColumn(name = "eventID")
+    private Event event;
     @ManyToOne
-    private User assignedID;
+    @JoinColumn(name = "assignedID")
+    private User user;
 
     public Task() {
     }
 
-    public Task(Integer taskID, String title, String description, String status, LocalDateTime datetime, Event eventID, User assignedID) {
+    public Task(Integer taskID, String title, String description, String status, LocalDateTime deadline, Event event, User user) {
         this.taskID = taskID;
         this.title = title;
         this.description = description;
         this.status = status;
-        this.datetime = datetime;
-        EventID = eventID;
-        this.assignedID = assignedID;
+        this.deadline = deadline;
+        this.event = event;
+        this.user = user;
     }
 
     public Integer getTaskID() {
@@ -68,28 +69,28 @@ public class Task {
         this.status = status;
     }
 
-    public LocalDateTime getDatetime() {
-        return datetime;
+    public LocalDateTime getDeadline() {
+        return deadline;
     }
 
-    public void setDatetime(LocalDateTime datetime) {
-        this.datetime = datetime;
+    public void setDeadline(LocalDateTime deadline) {
+        this.deadline = deadline;
     }
 
-    public Event getEventID() {
-        return EventID;
+    public Event getEvent() {
+        return event;
     }
 
-    public void setEventID(Event eventID) {
-        EventID = eventID;
+    public void setEvent(Event event) {
+        this.event = event;
     }
 
-    public User getAssignedID() {
-        return assignedID;
+    public User getUser() {
+        return user;
     }
 
-    public void setAssignedID(User assignedID) {
-        this.assignedID = assignedID;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -99,9 +100,9 @@ public class Task {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", status='" + status + '\'' +
-                ", datetime=" + datetime +
-                ", EventID=" + EventID +
-                ", assignedID=" + assignedID +
+                ", deadline=" + deadline +
+                ", event=" + event +
+                ", user=" + user +
                 '}';
     }
 }
