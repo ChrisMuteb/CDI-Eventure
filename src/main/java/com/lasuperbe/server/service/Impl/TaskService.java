@@ -1,6 +1,7 @@
 package com.lasuperbe.server.service.Impl;
 
 import com.lasuperbe.server.entity.Task;
+import com.lasuperbe.server.exception.ServerCustomException;
 import com.lasuperbe.server.repository.TaskRepository;
 import com.lasuperbe.server.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class TaskService {
     public Task findTaskById(Integer taskID){
         Optional<Task> task = taskRepository.findById(taskID);
         if(task.isEmpty())
-            throw new RuntimeException();
+            throw new ServerCustomException("Task with given id not found", "TASK_NOT_FOUND");
         Task result = task.get();
         return result;
     }

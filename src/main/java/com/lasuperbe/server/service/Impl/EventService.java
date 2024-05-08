@@ -3,6 +3,7 @@ package com.lasuperbe.server.service.Impl;
 import com.lasuperbe.server.dto.EventDTO;
 import com.lasuperbe.server.entity.Event;
 import com.lasuperbe.server.entity.User;
+import com.lasuperbe.server.exception.ServerCustomException;
 import com.lasuperbe.server.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class EventService {
     public Event findEventById(Integer eventID){
         Optional<Event> event = eventRepository.findById(eventID);
         if(event.isEmpty())
-            throw new RuntimeException();
+            throw new ServerCustomException("Event with given id not found", "EVENT_NOT_FOUND");
         Event result = event.get();
         return result;
     }

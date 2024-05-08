@@ -1,6 +1,7 @@
 package com.lasuperbe.server.service.Impl;
 
 import com.lasuperbe.server.entity.Participant;
+import com.lasuperbe.server.exception.ServerCustomException;
 import com.lasuperbe.server.repository.ParticipantRepository;
 import com.lasuperbe.server.repository.ParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class ParticipantService {
     public Participant findParticipantById(Integer participantID){
         Optional<Participant> participant = participantRepository.findById(participantID);
         if(participant.isEmpty())
-            throw new RuntimeException();
+            throw new ServerCustomException("Participant with given id not found", "PARTICIPANT_NOT_FOUND");
         Participant result = participant.get();
         return result;
     }
