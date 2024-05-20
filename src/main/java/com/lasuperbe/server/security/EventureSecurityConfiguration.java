@@ -20,7 +20,8 @@ public class EventureSecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         // 1) All requests should be authenticated
         http.authorizeHttpRequests(
-                auth -> auth.anyRequest().authenticated()
+                auth -> auth.requestMatchers("/events","/users", "/tasks", "/participants").authenticated()
+                        .requestMatchers("v1/register").permitAll()
         );
         // 2) If a request is not authenticated, a web page is shown
         http.httpBasic(withDefaults());
