@@ -5,6 +5,7 @@ import com.lasuperbe.server.service.Impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ public class LoginController {
 
     @Autowired
     private UserService userService;
+
     @PostMapping("v1/register")
     public ResponseEntity<String> registerUser(@RequestBody User user) {
         User savedUser = null;
