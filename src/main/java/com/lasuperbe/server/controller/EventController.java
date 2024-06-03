@@ -6,12 +6,14 @@ import com.lasuperbe.server.entity.User;
 import com.lasuperbe.server.repository.EventRepository;
 import com.lasuperbe.server.service.Impl.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/v1/events")
@@ -22,7 +24,14 @@ public class EventController {
     @GetMapping
     public ResponseEntity<List<Event>> getEvents(){
         List<Event> events = eventService.findAllEvent();
-        return new ResponseEntity<List<Event>>(events, HttpStatus.OK);
+        if (events != null ) {
+            return ResponseEntity.ok()
+                    .cacheControl(CacheControl.maxAge(60, TimeUnit.SECONDS))
+                    .body(events);
+        }else {
+            return null;
+        }
+//        return new ResponseEntity<List<Event>>(events, HttpStatus.OK).;
     }
     @GetMapping("/{id}")
     public ResponseEntity<Event> getEvent(@PathVariable int id){
